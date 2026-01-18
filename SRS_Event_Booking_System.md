@@ -130,4 +130,92 @@ The Event Booking System is a standalone web application that may integrate with
 
 #### 3.1.3 Event Discovery
 - Browse all events  
-- Search/filter by keyword, category,
+- Search/filter by keyword, category, location, date  
+- Pagination support  
+
+#### 3.1.4 Ticket Booking
+- Select ticket quantity  
+- Real-time availability check  
+- Booking statuses: Pending, Confirmed, Cancelled  
+- Each ticket has a unique ID (QR-ready)  
+
+#### 3.1.5 Payments
+- Secure payment processing  
+- Payment statuses: Pending, Successful, Failed  
+- Payments linked to bookings  
+- Mock/local payment gateways supported  
+
+#### 3.1.6 My Tickets
+- View purchased tickets  
+- View booking/payment status  
+- Access event details  
+
+#### 3.1.7 Organizer Dashboard
+- Manage events  
+- View ticket sales and attendees  
+- View revenue summaries  
+
+#### 3.1.8 Admin Management
+- Manage users  
+- Approve/block events  
+- Monitor bookings and payments  
+
+#### 3.1.9 Advanced Features (Phase 2)
+- Ticket resale with ownership verification  
+- Transferable ticket ownership  
+- Purchase/redeem gift cards  
+- Track gift card balance and expiry  
+
+---
+
+## 4. External Interface Requirements
+
+### 4.1 User Interfaces
+- Responsive web-based UI  
+- Separate dashboards for Customer, Organizer, Admin  
+- Accessible and user-friendly design  
+
+### 4.2 Hardware Interfaces
+- No specific hardware requirements  
+- Optional QR code scanners for ticket validation  
+
+### 4.3 Software Interfaces
+- Payment gateway APIs  
+- Email/SMS notifications (optional)  
+- QR code generation library  
+
+### 4.4 Communications Interfaces
+- HTTPS protocol  
+- RESTful API communication  
+
+---
+
+## 5. Nonfunctional Requirements
+
+### 5.1 Performance Requirements
+- Support concurrent users  
+- Search results load quickly  
+
+### 5.2 Safety Requirements
+- Data loss prevention (regular backups)  
+- Graceful error handling  
+
+### 5.3 Security Requirements
+- Secure JWT authentication  
+- HTTPS encryption  
+- Role-based access control  
+- Protection against common web vulnerabilities  
+
+---
+
+## 6. Appendix
+
+### A. Abbreviations
+- JWT: JSON Web Token  
+- SRS: Software Requirements Specification  
+- UI: User Interface  
+
+### B. Future Enhancements
+- Mobile application support  
+- Event recommendations  
+- Analytics and reporting dashboards  
