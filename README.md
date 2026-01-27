@@ -82,6 +82,29 @@ The **Gift Card Redeem** feature allows customers to apply prepaid gift cards du
 - Secure redemption record  
 
 ---
+## 🔔 Notifications & Reminders
+
+### 📩 SMS Notifications
+- SMS confirmation sent after successful ticket purchase  
+- SMS reminder sent before the event date (e.g., 24 hours or 1 day before)  
+- Messages include:
+  - Event name  
+  - Date & time  
+  - Venue  
+- Configurable reminder timing  
+
+---
+
+### 📅 Calendar Integration
+- After ticket purchase, customers are prompted to:
+  - Add the event to their personal calendar  
+- Supported calendars:
+  - Google Calendar  
+  - Apple Calendar  
+  - Outlook (via calendar file or link)  
+- If accepted:
+  - Event date, time, and location are saved to the user’s calendar  
+  - Reminder notifications are set automatically  
 
 ##  System Phases
 
@@ -92,8 +115,9 @@ The **Gift Card Redeem** feature allows customers to apply prepaid gift cards du
 - Ticket booking  
 - Payment integration  
 - My Tickets dashboard  
-- Admin management  
-
+- Admin management
+- Notifications & Reminders
+- Calendar Integration
 ###  Phase 2 – Advanced Features
 - Ticket resale system  
 - Gift card system  
