@@ -120,7 +120,7 @@ eduevent/
 │   └── package.json
 ├── .env.example
 └── README.md
-
+```
 ## Getting Started
 1. Clone & install
 
@@ -134,5 +134,6 @@ Pull requests welcome! For major changes, please open an issue first.
 Developer: Fetehadin Negash
 Location: Addis Ababa, Ethiopia
 Feel free to open issues or reach out!
-Built with curiosity and care for better event experiences in education & community.
+
+Built with curiosity and care for better event experiences.
 ⭐ Star if this inspires you. More phases coming!
