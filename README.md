@@ -124,16 +124,16 @@ eduevent/
 ## Getting Started
 1. Clone & install
 
-git clone https://github.com/fetehadin/Event-Booking-System.git
-cd Event-Booking-System
+-git clone https://github.com/fetehadin/Event-Booking-System.git
+-cd Event-Booking-System
 
-Contributing
+##Contributing
 Pull requests welcome! For major changes, please open an issue first.
 
 📬 Contact & Team
-Developer: Fetehadin Negash
-Location: Addis Ababa, Ethiopia
-Feel free to open issues or reach out!
+-Developer: Fetehadin Negash
+-Location: Addis Ababa, Ethiopia
+-Feel free to open issues or reach out!
 
-Built with curiosity and care for better event experiences.
-⭐ Star if this inspires you. More phases coming!
+-Built with curiosity and care for better event experiences.
+-⭐ Star if this inspires you. More phases coming!
