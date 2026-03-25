@@ -1,0 +1,173 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  // Note: The 'url' field is no longer needed here in v7! It is handled by prisma.config.ts
+}
+
+// --- PASTE ALL THE ENUMS AND MODELS HERE ---
+
+// Enums
+enum UserRole {
+  CUSTOMER
+  ORGANIZER
+  ADMIN
+}
+
+enum EventStatus {
+  DRAFT
+  PENDING
+  PUBLISHED
+  CANCELLED
+}
+
+enum LocationType {
+  PHYSICAL
+  VIRTUAL
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  EXPIRED
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  REFUNDED
+}
+
+// Models
+model User {
+  id               String   @id @default(uuid()) @db.Uuid
+  fullName         String?  @map("full_name")
+  phoneNumber      String?  @unique @map("phone_number")
+  email            String   @unique
+  passwordHash     String   @map("password_hash")
+  role             UserRole @default(CUSTOMER)
+  telegramUsername String?  @map("telegram_username")
+  isDeleted        Boolean  @default(false) @map("is_deleted")
+  
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  events           Event[]   @relation("OrganizerEvents")
+  bookings         Booking[]
+  
+  @@map("users")
+}
+
+model Event {
+  id            String       @id @default(uuid()) @db.Uuid
+  title         String
+  slug          String       @unique
+  description   String?
+  venueAddress  String?      @map("venue_address")
+  startDatetime DateTime     @map("start_datetime")
+  endDatetime   DateTime     @map("end_datetime")
+  category      String?
+  tags          String[]
+  thumbnailUrl  String?      @map("thumbnail_url")
+  locationType  LocationType @map("location_type")
+  status        EventStatus  @default(DRAFT)
+  isFree        Boolean      @default(true) @map("is_free")
+  maxAttendees  Int?         @map("max_attendees")
+  isDeleted     Boolean      @default(false) @map("is_deleted")
+
+  organizerId   String       @db.Uuid @map("organizer_id")
+  organizer     User         @relation("OrganizerEvents", fields: [organizerId], references: [id])
+
+  createdAt     DateTime     @default(now()) @map("created_at")
+  updatedAt     DateTime     @updatedAt @map("updated_at")
+
+  tickets       Ticket[]
+  bookings      Booking[]
+
+  @@index([category])
+  @@index([startDatetime])
+  @@index([status])
+  @@map("events")
+}
+
+model Ticket {
+  id            String   @id @default(uuid()) @db.Uuid
+  eventId       String   @db.Uuid @map("event_id")
+  event         Event    @relation(fields: [eventId], references: [id])
+  ticketType    String   @map("ticket_type") // REGULAR | VIP | EARLY_BIRD
+  price         Decimal  @db.Decimal(12, 2)
+  totalCapacity Int      @map("total_capacity")
+  remainingQty  Int      @map("remaining_qty")
+
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  bookingItems  BookingItem[]
+
+  @@unique([eventId, ticketType])
+  @@map("tickets")
+}
+
+model Booking {
+  id          String        @id @default(uuid()) @db.Uuid
+  userId      String        @db.Uuid @map("user_id")
+  user        User          @relation(fields: [userId], references: [id])
+  eventId     String        @db.Uuid @map("event_id")
+  event       Event         @relation(fields: [eventId], references: [id])
+
+  status      BookingStatus @default(PENDING)
+  totalAmount Decimal       @db.Decimal(12, 2) @map("total_amount")
+
+  createdAt   DateTime      @default(now()) @map("created_at")
+  updatedAt   DateTime      @updatedAt @map("updated_at")
+
+  items       BookingItem[]
+  payment     Payment?
+
+  @@index([userId])
+  @@index([eventId])
+  @@map("bookings")
+}
+
+model BookingItem {
+  id              String   @id @default(uuid()) @db.Uuid
+  bookingId       String   @db.Uuid @map("booking_id")
+  booking         Booking  @relation(fields: [bookingId], references: [id])
+  ticketId        String   @db.Uuid @map("ticket_id")
+  ticket          Ticket   @relation(fields: [ticketId], references: [id])
+  
+  quantity        Int
+  priceAtPurchase Decimal  @db.Decimal(12, 2) @map("price_at_purchase")
+
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  @@map("booking_items")
+}
+
+model Payment {
+  id              String        @id @default(uuid()) @db.Uuid
+  bookingId       String        @unique @db.Uuid @map("booking_id")
+  booking         Booking       @relation(fields: [bookingId], references: [id])
+  
+  externalRef     String        @unique @map("external_ref")
+  status          PaymentStatus @default(PENDING)
+  amountPaid      Decimal       @db.Decimal(12, 2) @map("amount_paid")
+  currency        String        @default("ETB")
+  paymentMethod   String?       @map("payment_method")
+  providerResponse Json?        @map("provider_response")
+  paidAt          DateTime?     @map("paid_at")
+
+  createdAt       DateTime      @default(now()) @map("created_at")
+  updatedAt       DateTime      @updatedAt @map("updated_at")
+
+  @@map("payments")
+}
