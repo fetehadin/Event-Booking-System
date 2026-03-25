@@ -1,221 +1,361 @@
-# Software Requirements Specification (SRS)
-## Event Booking System
+# Software Requirements Specification (SRS)  
+## Event Booking Platform
 
 ---
 
 ## Table of Contents
 
-1. [Introduction](#introduction)  
-   1.1 [Purpose](#purpose)  
-   1.2 [Document Conventions](#document-conventions)  
-   1.3 [Intended Audience and Reading Suggestions](#intended-audience-and-reading-suggestions)  
-   1.4 [Project Scope](#project-scope)  
-   1.5 [References](#references)  
-
-2. [Overall Description](#overall-description)  
-   2.1 [Product Perspective](#product-perspective)  
-   2.2 [Product Features](#product-features)  
-   2.3 [User Classes and Characteristics](#user-classes-and-characteristics)  
-   2.4 [Operating Environment](#operating-environment)  
-   2.5 [Design and Implementation Constraints](#design-and-implementation-constraints)  
-   2.6 [Assumptions and Dependencies](#assumptions-and-dependencies)  
-
-3. [System Features](#system-features)  
-   3.1 [Functional Requirements](#functional-requirements)  
-       3.1.1 [User Accounts & Authentication](#user-accounts--authentication)  
-       3.1.2 [Event Management](#event-management)  
-       3.1.3 [Event Discovery](#event-discovery)  
-       3.1.4 [Ticket Booking](#ticket-booking)  
-       3.1.5 [Payments](#payments)  
-       3.1.6 [My Tickets](#my-tickets)  
-       3.1.7 [Organizer Dashboard](#organizer-dashboard)  
-       3.1.8 [Admin Management](#admin-management)  
-       3.1.9 [Advanced Features (Phase 2)](#advanced-features-phase-2)  
-
-4. [External Interface Requirements](#external-interface-requirements)  
-   4.1 [User Interfaces](#user-interfaces)  
-   4.2 [Hardware Interfaces](#hardware-interfaces)  
-   4.3 [Software Interfaces](#software-interfaces)  
-   4.4 [Communications Interfaces](#communications-interfaces)  
-
-5. [Nonfunctional Requirements](#nonfunctional-requirements)  
-   5.1 [Performance Requirements](#performance-requirements)  
-   5.2 [Safety Requirements](#safety-requirements)  
-   5.3 [Security Requirements](#security-requirements)  
-
-6. [Appendix](#appendix)  
+1. Introduction  
+2. Overall Description  
+3. System Architecture  
+4. Functional Requirements  
+5. External Interface Requirements  
+6. Nonfunctional Requirements  
+7. Data Requirements  
+8. System Constraints & Risks  
+9. Future Roadmap  
 
 ---
 
 ## 1. Introduction
 
-### 1.1 Purpose
-This document provides a detailed description of the Software Requirements Specification (SRS) for the Event Booking System. It defines functional and nonfunctional requirements to guide developers, testers, project managers, and stakeholders throughout the system development lifecycle.
+### 1.1 Purpose  
+This document defines the functional and nonfunctional requirements for **Event Booking Platform**, a full-stack event booking platform designed to streamline event discovery, booking, and management through a unified, scalable system.
 
-### 1.2 Document Conventions
-- **Bold text** indicates main features or roles  
-- *Italic text* highlights important terms  
-- Numbered lists represent system requirements  
-- "Shall" is used to indicate mandatory requirements  
+It serves as a reference for developers, stakeholders, and evaluators to ensure clarity, consistency, and completeness during development.
 
-### 1.3 Intended Audience and Reading Suggestions
-This document is intended for:  
-- Software developers  
-- System analysts  
-- Project managers  
-- Testers  
-- Academic evaluators  
+---
 
-### 1.4 Project Scope
-The Event Booking System is a web-based platform that allows users to discover events, book tickets, and make payments online. Event organizers can create and manage events, while administrators oversee system operations, approvals, and security.
+### 1.2 Scope  
 
-### 1.5 References
-- IEEE 830 / IEEE 29148 SRS Standard  
-- REST API Design Guidelines  
-- JWT Authentication Documentation  
+**Event Booking Platform** replaces fragmented event systems (posters, manual booking, scattered communication) with a centralized platform that enables:
+- Users to discover and book educational and value-driven events  
+- Organizers to create, manage, and track events  
+- Admins to monitor, moderate, and control the system  
+
+The system emphasizes:
+- Real-time updates  
+- Role-based access control  
+- Scalable backend architecture  
+- Clean and modern user experience  
+---
+
+### 1.3 Intended Audience  
+
+- Full-stack developers  
+- Backend engineers  
+- UI/UX designers  
+- Project evaluators  
+- Future collaborators  
+
+---
+
+### 1.4 Definitions  
+
+- **User**: A customer who browses and books events  
+- **Organizer**: A user who creates and manages events  
+- **Admin**: A system controller with full privileges  
+- **Booking**: A reservation of one or more tickets  
+- **Ticket**: A unique entry linked to a booking  
 
 ---
 
 ## 2. Overall Description
 
-### 2.1 Product Perspective
-The Event Booking System is a standalone web application that may integrate with external payment gateways. It follows a client-server architecture with RESTful APIs and role-based access control.
+### 2.1 Product Perspective  
 
-### 2.2 Product Features
-- User authentication and role management  
-- Event creation and approval  
-- Event search and discovery  
-- Ticket booking and payment processing  
-- Organizer and admin dashboards  
-- Advanced features such as ticket resale and gift cards  
+EduEveEvent Booking Platform is a **full-stack web application** built with:
 
-### 2.3 User Classes and Characteristics
-- **Customer**: Browse/search events, book/pay tickets, view purchased tickets  
-- **Event Organizer**: Create/manage events, view ticket sales, monitor revenue  
-- **Admin**: Manage users, approve/block events, monitor system activity  
+- **Frontend**: Next.js (React-based)  
+- **Backend**: Node.js (REST API)  
+- **Database**: PostgreSQL  
+- **Auth**: JWT-based authentication  
 
-### 2.4 Operating Environment
-- Web browsers: Chrome, Firefox, Edge  
-- Backend server: Java/Spring Boot or similar  
-- Database server: MySQL/PostgreSQL  
-- Internet-based deployment  
-
-### 2.5 Design and Implementation Constraints
-- JWT-based authentication  
-- Secure payment handling  
-- Role-based access control  
-- Compliance with academic project guidelines  
-
-### 2.6 Assumptions and Dependencies
-- Users have internet access  
-- Payment gateway availability  
-- QR code generation library availability  
+It follows a **client-server architecture** with clear separation of concerns.
 
 ---
 
-## 3. System Features
+### 2.2 Core Features  
 
-### 3.1 Functional Requirements
+- Authentication & role management  
+- Event lifecycle management  
+- Smart event discovery  
+- Real-time ticket booking system  
+- Payment integration (extensible)  
+- Notification system  
+- Admin moderation tools  
 
-#### 3.1.1 User Accounts & Authentication
-- Users shall register and log in  
-- JWT for authentication  
-- Roles: Customer, Organizer, Admin  
-- Users shall manage profiles  
+---
 
-#### 3.1.2 Event Management
-- Organizers create, update, delete events  
-- Event details: title, description, venue, date/time, category, ticket price, quantity  
-- Admin approves/rejects events  
+### 2.3 User Roles  
 
-#### 3.1.3 Event Discovery
-- Browse all events  
-- Search/filter by keyword, category, location, date  
-- Pagination support  
+#### 1. User (Customer)
+- Discover events  
+- Book tickets  
+- Track bookings  
 
-#### 3.1.4 Ticket Booking
-- Select ticket quantity  
-- Real-time availability check  
-- Booking statuses: Pending, Confirmed, Cancelled  
-- Each ticket has a unique ID (QR-ready)  
+#### 2. Organizer
+- Create/manage events  
+- Monitor sales and attendance  
 
-#### 3.1.5 Payments
-- Secure payment processing  
-- Payment statuses: Pending, Successful, Failed  
-- Payments linked to bookings  
-- Mock/local payment gateways supported  
+#### 3. Admin
+- Approve/reject events  
+- Manage users and system activity  
 
-#### 3.1.6 My Tickets
-- View purchased tickets  
-- View booking/payment status  
-- Access event details  
+---
 
-#### 3.1.7 Organizer Dashboard
-- Manage events  
-- View ticket sales and attendees  
-- View revenue summaries  
+### 2.4 Operating Environment  
 
-#### 3.1.8 Admin Management
-- Manage users  
-- Approve/block events  
+- Modern browsers (Chrome, Firefox, Edge)  
+- Cloud-based deployment (future-ready)  
+- REST API over HTTPS  
+
+---
+
+## 3. System Architecture
+
+### 3.1 High-Level Architecture  
+
+- **Frontend Layer** (Next.js UI)  
+- **API Layer** (Node.js backend)  
+- **Business Logic Layer**  
+- **Database Layer** (PostgreSQL)  
+
+---
+
+### 3.2 Key Architectural Principles  
+
+- Separation of concerns  
+- Stateless APIs  
+- Secure authentication (JWT)  
+- Scalable modular design  
+- RESTful communication  
+
+---
+
+### 3.3 Data Flow Overview  
+
+1. User interacts with UI  
+2. UI sends request to API  
+3. API validates and processes request  
+4. Database stores/retrieves data  
+5. Response returned to user  
+
+---
+
+## 4. Functional Requirements
+
+### 4.1 Authentication & Authorization  
+
+- Users shall register and log in securely  
+- The system shall use JWT for authentication  
+- Role-based access control shall be enforced  
+- Users shall update profile information  
+
+---
+
+### 4.2 Event Management  
+
+- Organizers shall create, edit, and delete events  
+- Events shall include:
+  - Title  
+  - Description  
+  - Category  
+  - Location  
+  - Date & time  
+  - Ticket price  
+  - Capacity  
+
+- Admin shall approve or reject events before publishing  
+
+---
+
+### 4.3 Event Discovery  
+
+- Users shall browse available events  
+- The system shall support:
+  - Search by keyword  
+  - Filter by category, date, location  
+  - Pagination  
+
+---
+
+### 4.4 Booking System  
+
+- Users shall select ticket quantity  
+- System shall validate availability in real-time  
+- Booking statuses:
+  - Pending  
+  - Confirmed  
+  - Cancelled  
+
+- Each ticket shall have a unique identifier (QR-ready)  
+
+---
+
+### 4.5 Payment System  
+
+- System shall support payment processing (mock or real)  
+- Payment statuses:
+  - Pending  
+  - Successful  
+  - Failed  
+
+- Payments shall be linked to bookings  
+
+---
+
+### 4.6 Ticket Management  
+
+- Users shall view purchased tickets  
+- Tickets shall include:
+  - Event details  
+  - Booking status  
+  - Payment status  
+
+---
+
+### 4.7 Organizer Dashboard  
+
+- View all created events  
+- Track ticket sales  
+- Monitor revenue and attendance  
+
+---
+
+### 4.8 Admin Panel  
+
+- Manage users (block/unblock)  
+- Approve or reject events  
 - Monitor bookings and payments  
 
-#### 3.1.9 Advanced Features (Phase 2)
-- Ticket resale with ownership verification  
-- Transferable ticket ownership  
-- Purchase/redeem gift cards  
-- Track gift card balance and expiry  
+---
+
+### 4.9 Notifications System  
+
+- System shall send notifications for:
+  - Booking confirmation  
+  - Payment updates  
+  - Event approval/rejection  
+
+- Delivery methods (extensible):
+  - Email  
+  - In-app notifications  
 
 ---
 
-## 4. External Interface Requirements
+## 5. External Interface Requirements
 
-### 4.1 User Interfaces
-- Responsive web-based UI  
-- Separate dashboards for Customer, Organizer, Admin  
-- Accessible and user-friendly design  
+### 5.1 User Interface  
 
-### 4.2 Hardware Interfaces
-- No specific hardware requirements  
-- Optional QR code scanners for ticket validation  
+- Responsive and modern UI  
+- Role-based dashboards  
+- Clean event browsing experience  
 
-### 4.3 Software Interfaces
-- Payment gateway APIs  
-- Email/SMS notifications (optional)  
+---
+
+### 5.2 Software Interfaces  
+
+- Payment gateway APIs (future integration)  
+- Email notification services  
 - QR code generation library  
 
-### 4.4 Communications Interfaces
+---
+
+### 5.3 Communication Interfaces  
+
 - HTTPS protocol  
-- RESTful API communication  
+- RESTful APIs (JSON format)  
 
 ---
 
-## 5. Nonfunctional Requirements
+## 6. Nonfunctional Requirements
 
-### 5.1 Performance Requirements
-- Support concurrent users  
-- Search results load quickly  
+### 6.1 Performance  
 
-### 5.2 Safety Requirements
-- Data loss prevention (regular backups)  
-- Graceful error handling  
+- System shall support concurrent users  
+- API responses should be under 500ms (target)  
+- Efficient database queries  
 
-### 5.3 Security Requirements
-- Secure JWT authentication  
+---
+
+### 6.2 Scalability  
+
+- System shall support horizontal scaling  
+- Modular backend design for future microservices  
+
+---
+
+### 6.3 Security  
+
+- JWT-based authentication  
+- Password hashing (bcrypt)  
 - HTTPS encryption  
-- Role-based access control  
-- Protection against common web vulnerabilities  
+- Protection against:
+  - SQL Injection  
+  - XSS  
+  - CSRF  
 
 ---
 
-## 6. Appendix
+### 6.4 Reliability  
 
-### A. Abbreviations
-- JWT: JSON Web Token  
-- SRS: Software Requirements Specification  
-- UI: User Interface  
+- System shall ensure high availability  
+- Graceful error handling  
+- Logging and monitoring support  
 
-### B. Future Enhancements
-- Mobile application support  
-- Event recommendations  
-- Analytics and reporting dashboards  
+---
+
+### 6.5 Usability  
+
+- Intuitive navigation  
+- Minimal learning curve  
+- Mobile-responsive design  
+
+---
+
+## 7. Data Requirements
+
+### 7.1 Core Entities  
+
+- Users  
+- Events  
+- Bookings  
+- Tickets  
+- Payments  
+
+---
+
+### 7.2 Data Integrity  
+
+- Foreign key relationships enforced  
+- Transaction handling for bookings/payments  
+- Consistency between ticket availability and bookings  
+
+---
+
+## 8. System Constraints & Risks
+
+### Constraints  
+
+- Dependence on external payment gateways  
+- Internet connectivity required  
+- JWT expiration handling  
+
+### Risks  
+
+- High traffic causing performance issues  
+- Payment failures  
+- Data inconsistency in concurrent bookings  
+
+---
+
+## 9. Future Roadmap
+
+### Phase 2 Enhancements  
+
+- Ticket resale system  
+- Ticket transfer between users  
+- Gift cards & wallet system  
+- Event recommendation engine  
+- Analytics dashboard  
