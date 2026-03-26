@@ -1,6 +1,7 @@
 {
   "name": "event-booking-system",
   "version": "1.0.0",
+  "type": "module",
   "description": "**Modern full-stack platform for discovering educational & value-driven events, booking tickets, managing participation — with real-time updates, role-based access, and smart notifications.**",
   "main": "index.js",
   "directories": {
