@@ -1,40 +1,8 @@
-// src/server.ts
-import * as dotenv from "dotenv";
-dotenv.config();
+import "dotenv/config"; // Loads your .env file immediately
+import app from "./app.js"; // Imports the configured Express app
 
-import express from "express";
-import prisma from "./lib/prisma.js";
+const PORT = process.env.PORT || 5000;
 
-const app = express();
-app.use(express.json());
-
-app.get("/", (req, res) => {
-  res.send("API running...");
-});
-
-app.get("/test-db", async (req, res) => {
-  try {
-    // 1. Test raw connection
-    await prisma.$queryRaw`SELECT 1`;
-    
-    // 2. Fetch users to return expected []
-    const users = await prisma.user.findMany();
-    
-    res.status(200).json({
-      status: "success",
-      message: "Database connected correctly",
-      data: users
-    });
-  } catch (error) {
-    console.error("DB Connection Error:", error);
-    res.status(500).json({
-      status: "error",
-      message: "Failed to connect to the database",
-      details: error instanceof Error ? error.message : String(error)
-    });
-  }
-});
-
-app.listen(3000, () => {
-  console.log("Server running on port 3000");
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
